@@ -58,13 +58,13 @@ ASCIIDOCFLAGS = -arevnumber=$(VERSION) -amansource="Audio File Library"
 A2XFLAGS = $(ASCIIDOCFLAGS) -d manpage -f manpage
 
 %.html: %.txt
-	$(ASCIIDOC) $(ASCIIDOCFLAGS) -b html4 -d manpage -f asciidoc.conf $<
+	$(ASCIIDOC) $(ASCIIDOCFLAGS) -b html4 -d manpage --no-xmllint -f asciidoc.conf $<
 
 %.1: %.1.txt
-	$(A2X) $(A2XFLAGS) --asciidoc-opts="-f asciidoc.conf" $<
+	$(A2X) $(A2XFLAGS) --no-xmllint --asciidoc-opts="-f asciidoc.conf" $<
 
 %.3: %.3.txt
-	$(A2X) $(A2XFLAGS) --asciidoc-opts="-f asciidoc.conf" $<
+	$(A2X) $(A2XFLAGS) --no-xmllint --asciidoc-opts="-f asciidoc.conf" $<
 
 html: $(DOCS_HTML)
 
