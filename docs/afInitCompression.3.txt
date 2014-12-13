@@ -1,5 +1,5 @@
-afInitByteOrder(3)
-==================
+afInitCompression(3)
+====================
 
 NAME
 ----
