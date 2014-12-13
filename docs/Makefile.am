@@ -34,7 +34,6 @@ DOCS_MAN3 = $(DOCS_TXT_MAN3:.txt=)
 DOCS_MAN3_EXTRA = \
 	afIdentifyNamedFD.3 \
 	afInitAESChannelData.3 \
-	afInitByteOrder.3 \
 	afInitChannels.3 \
 	afInitRate.3 \
 	afGetDataOffset.3 \
