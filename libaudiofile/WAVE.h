@@ -33,19 +33,26 @@
 #include "Compiler.h"
 #include "FileHandle.h"
 #include <stdint.h>
+#include <string>
 
 #define _AF_WAVE_NUM_INSTPARAMS 7
 extern const InstParamInfo _af_wave_inst_params[_AF_WAVE_NUM_INSTPARAMS];
 #define _AF_WAVE_NUM_COMPTYPES 4
 extern const int _af_wave_compression_types[_AF_WAVE_NUM_COMPTYPES];
 
-struct UUID;
-
 class WAVEFile : public _AFfilehandle
 {
 public:
 	static bool recognize(File *fh);
 	static AFfilesetup completeSetup(AFfilesetup);
+
+	struct UUID {
+		uint8_t data[16];
+
+		bool operator==(const UUID &) const;
+		bool operator!=(const UUID &) const;
+		std::string name() const;
+	};
 
 	WAVEFile();
 

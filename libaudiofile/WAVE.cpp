@@ -42,7 +42,6 @@
 #include "Setup.h"
 #include "Tag.h"
 #include "Track.h"
-#include "UUID.h"
 #include "byteorder.h"
 #include "util.h"
 
@@ -127,26 +126,56 @@ static const _AFfilesetup waveDefaultFileSetup =
 	NULL			/* miscellaneous */
 };
 
-static const UUID _af_wave_guid_pcm =
+static const WAVEFile::UUID _af_wave_guid_pcm =
 {{
 	0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00,
 	0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71
 }};
-static const UUID _af_wave_guid_ieee_float =
+static const WAVEFile::UUID _af_wave_guid_ieee_float =
 {{
 	0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00,
 	0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71
 }};
-static const UUID _af_wave_guid_ulaw =
+static const WAVEFile::UUID _af_wave_guid_ulaw =
 {{
 	0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00,
 	0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71
 }};
-static const UUID _af_wave_guid_alaw =
+static const WAVEFile::UUID _af_wave_guid_alaw =
 {{
 	0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00,
 	0x80, 0x00, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71
 }};
+
+bool WAVEFile::UUID::operator==(const UUID &u) const {
+	return !memcmp(data, u.data, 16);
+}
+
+bool WAVEFile::UUID::operator!=(const UUID &u) const {
+	return memcmp(data, u.data, 16) != 0;
+}
+
+std::string WAVEFile::UUID::name() const {
+	char s[37];
+	uint32_t u1 =
+		(data[0] << 24) |
+		(data[1] << 16) |
+		(data[2] << 8) |
+		data[3];
+	uint16_t u2 =
+		(data[4] << 8) |
+		data[5];
+	uint16_t u3 =
+		(data[6] << 8) |
+		data[7];
+	uint16_t u4 =
+		(data[8] << 8) |
+		data[9];
+	snprintf(s, 37, "%08x-%04x-%04x-%04x-%02x%02x%02x%02x%02x%02x",
+		u1, u2, u3, u4,
+		data[10], data[11], data[12], data[13], data[14], data[15]);
+	return std::string(s);
+}
 
 WAVEFile::WAVEFile()
 {
