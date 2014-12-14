@@ -36,6 +36,12 @@
 #define ALWAYS_INLINE
 #endif
 
+#if _WIN32 || _WIN64
+#define INLINE __inline
+#else
+#define INLINE inline
+#endif
+
 #if TARGET_CPU_PPC && (__MWERKS__ >= 0x3200)
 // align loops to a 16 byte boundary to make the G5 happy
 #pragma function_align 16
@@ -44,7 +50,7 @@
 #define LOOP_ALIGN
 #endif
 
-static inline int32_t ALWAYS_INLINE sign_of_int( int32_t i )
+static INLINE int32_t ALWAYS_INLINE sign_of_int( int32_t i )
 {
     int32_t negishift;
 	
